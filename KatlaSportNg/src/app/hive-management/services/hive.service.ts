@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { Hive } from '../models/hive';
 import { HiveListItem } from '../models/hive-list-item';
 import { HiveSectionListItem } from '../models/hive-section-list-item';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { HiveSection } from '../models/hive-section';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +41,6 @@ export class HiveService {
   }
 
   setHiveStatus(hiveId: number, deletedStatus: boolean): Observable<Object> {
-    return null;
+    return this.http.put(`${this.url}${hiveId}/status/${deletedStatus}`, {headers: new HttpHeaders({})});
   }
 }

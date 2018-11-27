@@ -24,4 +24,14 @@ export class HiveSectionListComponent implements OnInit {
       this.hiveId = p['id'];
       this.hiveService.getHiveSections(this.hiveId).subscribe(s => this.hiveSections = s);
   })}
+
+  onDelete(hiveId: number) {
+    var hiveSection = this.hiveSections.find(h => h.id == hiveId);
+    this.hiveService.setHiveStatus(hiveId, true).subscribe(s => hiveSection.isDeleted = true);
+  }
+
+  onUndelete(hiveId: number) { 
+    var hiveSection = this.hiveSections.find(h => h.id == hiveId);
+    this.hiveService.setHiveStatus(hiveId, false).subscribe(s => hiveSection.isDeleted = false);
+  }
 }
