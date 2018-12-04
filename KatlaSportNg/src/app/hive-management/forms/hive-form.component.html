@@ -1,10 +1,10 @@
 <div class="container">
   <h2>Hive Editor</h2>
-  <form (ngSubmit)="onSubmit()" #hiveForm="ngForm">
+  <form (ngSubmit)="onSubmit(hive)" #hiveForm="ngForm">
     <div class="form-group" *ngIf='existed'>
-      <label for="idLabel">ID</label>
-      <input type="text" class="form-control" id="id" aria-describedby="idLabel" [(ngModel)]="hive.id" name="id" #id="ngModel"
-        readonly>
+      <label for="id" id="idLabel">ID</label>
+      <input type="text" class="form-control" id="id" aria-describedby="idLabel" required [(ngModel)]="hive.id"
+       name="id" #id="ngModel" readonly>
     </div>
     <div class="form-group">
       <label for="name" id="nameLabel">Hive Name</label>
@@ -15,10 +15,45 @@
         <div *ngIf="name.errors.minlength">Hive Name must be at least 4 characters long.</div>
       </div>
     </div>
+    <div class="form-group">
+      <label for="code" id="codeLable">Hive Code</label>
+      <input type="text" class="form-control" id="code" aria-describedby="codeLable" minlength="5" maxlength="5" required [(ngModel)]="hive.code"
+        name="code" #code="ngModel">
+      <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert alert-danger">
+        <div *ngIf="code.errors.minlength">Hive Code must be equal to 5 characters long.</div>
+        <div *ngIf="code.errors.maxlength">Hive Code must be equal to 5 characters long.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="address" id="addressLable">Hive Address</label>
+      <input type="text" class="form-control" id="address" aria-describedby="addressLable" minlength="5" maxlength="300" required [(ngModel)]="hive.address"
+        name="address" #address="ngModel">
+      <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger">
+        <div *ngIf="address.errors.minlength">Hive Address must be at least 5 characters long.</div>
+        <div *ngIf="address.errors.maxlength">Hive Address must be no more than 300 characters long.</div>
+      </div>
+    </div>
     <div class="form-group" *ngIf='existed'>
       <label for="lastUpdated" id="lastUpdatedLabel">Last Update</label>
       <input type="text" class="form-control" id="lastUpdated" aria-describedby="lastUpdatedLabel" required [(ngModel)]="hive.lastUpdated"
         name="lastUpdated" #lastUpdated="ngModel" readonly>
     </div>
+    <span class="btn-toolbar" role="toolbar" aria-label="Hive action buttons" style="display: block; white-space:nowrap;">
+      <div class="btn-group mr-2" role="group" aria-label="Back group" (click)="navigateToHives()">
+        <button type="button" class="btn btn-primary">Back</button>
+      </div>
+      <div class="btn-group mr-2" role="group" aria-label="View group"  (click)="onSubmit(hive)">
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
+      <div class="btn-group mr-2" role="group" aria-label="Delete group" *ngIf="!hive.isDeleted" (click)="onDelete(hive.id)">
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+      <div class="btn-group mr-2" role="group" aria-label="Restore group" *ngIf="hive.isDeleted" (click)="onUndelete(hive.id)">
+        <button type="button" class="btn btn-success">Undelete</button>
+      </div>
+      <div class="btn-group mr-2" role="group" aria-label="View group" >
+        <button type="button" class="btn btn-primary">Purge</button>
+      </div>
+    </span>
   </form>
 </div>

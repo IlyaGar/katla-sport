@@ -35,7 +35,8 @@ export class HiveFormComponent implements OnInit {
     this.navigateToHives();
   }
   
-  onSubmit() {
+  onSubmit(hive: Hive) {
+    this.hiveService.addHive(hive).subscribe();
   }
 
   onDelete() {
