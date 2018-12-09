@@ -12,6 +12,7 @@ export class HiveFormComponent implements OnInit {
 
   hive = new Hive(0, "", "", "", false, "");
   existed = false;
+  nameValue:string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -35,15 +36,28 @@ export class HiveFormComponent implements OnInit {
     this.navigateToHives();
   }
   
-  onSubmit() {
+  onSubmit(hive: Hive) {
+    if(hive.id > 0) this.onUpdate(hive);
+    else this.onAdd(hive);
   }
 
-  onDelete() {
+  onAdd(hive: Hive) {
+    this.hiveService.addHive(hive).subscribe(h => hive.id);
   }
 
-  onUndelete() {
+  onUpdate(hive: Hive) {
+    this.hiveService.updateHive(hive).subscribe(h => hive.id);
+  }
+
+  onDelete(hiveId: number, hive: Hive) {
+    this.hiveService.setHiveStatus(hiveId, true).subscribe(c => hive.isDeleted = true);
+  }
+
+  onUndelete(hiveId: number, hive: Hive) {
+    this.hiveService.setHiveStatus(hiveId, false).subscribe(c => hive.isDeleted = false);
   }
 
   onPurge() {
+    this.nameValue='';
   }
 }
