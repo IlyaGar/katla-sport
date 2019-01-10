@@ -65,7 +65,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> AddProduct([FromBody] UpdateHiveRequest createRequest)
+        public async Task<IHttpActionResult> AddHive([FromBody] UpdateHiveRequest createRequest)
         {
             if (!ModelState.IsValid)
             {
