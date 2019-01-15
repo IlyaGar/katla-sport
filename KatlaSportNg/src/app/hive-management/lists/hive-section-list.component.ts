@@ -10,6 +10,7 @@ import { HiveService } from '../services/hive.service';
 })
 export class HiveSectionListComponent implements OnInit {
 
+  hiveSectionsId: number;
   hiveId: number;
   hiveSections: Array<HiveSectionListItem>;
 
@@ -25,13 +26,18 @@ export class HiveSectionListComponent implements OnInit {
       this.hiveService.getHiveSections(this.hiveId).subscribe(s => this.hiveSections = s);
   })}
 
-  onDelete(hiveId: number) {
-    var hiveSection = this.hiveSections.find(h => h.id == hiveId);
-    this.hiveService.setHiveStatus(hiveId, true).subscribe(s => hiveSection.isDeleted = true);
+  onDelete(hiveSectionId: number) {
+    var hiveSection = this.hiveSections.find(h => h.id == hiveSectionId);
+    this.hiveService.setHiveStatus(hiveSectionId, true).subscribe(s => hiveSection.isDeleted = true);
   }
 
-  onUndelete(hiveId: number) { 
-    var hiveSection = this.hiveSections.find(h => h.id == hiveId);
-    this.hiveService.setHiveStatus(hiveId, false).subscribe(s => hiveSection.isDeleted = false);
+  onUndelete(hiveSectionId: number) { 
+    var hiveSection = this.hiveSections.find(h => h.id == hiveSectionId);
+    this.hiveService.setHiveStatus(hiveSectionId, false).subscribe(s => hiveSection.isDeleted = false);
+  }
+  
+  onNewHiveSection(hiveId: number){
+    sessionStorage.setItem("key", `${hiveId}`);
+    this.router.navigate(['/section']);
   }
 }
