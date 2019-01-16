@@ -11,10 +11,11 @@ import {Location} from '@angular/common';
 })
 export class HiveSectionFormComponent implements OnInit {
  
-  hiveSection = new HiveSection(0, "", "", false, "");
+  hiveSection = new HiveSection(0, "", "", false, "", 0);
   existed = false;
-  hiveId: number = +sessionStorage.getItem("key");;
+  hiveId: number;
   nameValue: string = '';
+
 
   constructor(
     private route: ActivatedRoute,
@@ -40,15 +41,18 @@ export class HiveSectionFormComponent implements OnInit {
   }
 
   onSubmit(hiveSection: HiveSection) {
+    this.hiveId = +sessionStorage.getItem("key");
     if(hiveSection.id > 0) this.onUpdate(hiveSection);
     else this.onAdd(hiveSection);
   }
 
   onAdd(hiveSection: HiveSection) {
-    this.hiveSectionService.addHiveSection(this.hiveId, hiveSection).subscribe(h => hiveSection.id);
+    hiveSection.hiveId = this.hiveId;
+    this.hiveSectionService.addHiveSection(hiveSection).subscribe(h => hiveSection.id);
   }
 
   onUpdate(hiveSection: HiveSection) {
+    hiveSection.hiveId = this.hiveId;
     this.hiveSectionService.updateHiveSection(hiveSection).subscribe(h => hiveSection.id);
   }
 
