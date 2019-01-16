@@ -57,7 +57,7 @@ namespace KatlaSport.Services.HiveManagement
         }
 
         /// <inheritdoc/>
-        public async Task<HiveSection> CreateHiveSectionAsync(UpdateHiveSectionRequest createRequest)
+        public async Task<HiveSection> CreateHiveSectionAsync( UpdateHiveSectionRequest createRequest)
         {
             var dbHiveSections = await _context.Sections.Where(p => p.Code == createRequest.Code).ToArrayAsync();
             if (dbHiveSections.Length > 0)
